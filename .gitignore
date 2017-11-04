@@ -23,6 +23,6 @@
 .byebug_history
 
 #BROCK
-/.DS_Store/
+.DS_Store
 tmp/
 log/
