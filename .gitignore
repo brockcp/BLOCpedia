@@ -26,3 +26,7 @@
 .DS_Store
 tmp/
 log/
+
+# Ignore application configuration
+/config/application.yml
+/config/secrets.yml
