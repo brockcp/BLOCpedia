@@ -39,5 +39,10 @@ source 'https://rubygems.org'
    gem 'listen', '~> 3.0.5'
  end
 
+ group :development do
+   gem 'pry-rails'
+ end
+
  gem 'devise'
  gem 'figaro'
+ gem 'bootstrap-sass'
