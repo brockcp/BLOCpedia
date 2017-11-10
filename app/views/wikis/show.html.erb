@@ -1,6 +1,7 @@
 <h1><%= @wiki.title %></h1>
 <h1><%= @wiki.body %></h1>
 
+
 <%= link_to "EDIT WIKI", edit_wiki_path(@wiki), class: 'btn btn-warning' %>
 <%= link_to "NEW WIKI", new_wiki_path(@wiki), class: 'btn btn-success' %>
 <%= link_to "DESTROY", @wiki, method: :delete, class: "btn btn-danger", data: { confirm: 'Are you sure?' } %>
