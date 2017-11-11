@@ -6,7 +6,4 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!
 
-  rescue_from Pundit::NotAuthorizedError do
-    redirect_to root_url, alert: "You do not have access to this page."
-  end
 end

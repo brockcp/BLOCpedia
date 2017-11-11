@@ -1,25 +1,18 @@
 class WikiPolicy < ApplicationPolicy
 
-  def index?
-    true
-  end
+ attr_reader :user, :wiki
 
-  def create?
-    user.present?
-  end
+ def initialize(user, wiki)
+   @user = user
+   @wiki = wiki
+ end
 
-  def update?
-    return true if user.present? && user == article.user
-  end
+ def destroy?
+   user.admin? or user == wiki.user
+ end
 
-  def destroy?
-    return true if user.present? && user == article.user
-  end
-
-  private
-
-    def article
-      record
-    end
+ def update?
+   user.admin? or user == wiki.user
+ end
 
 end

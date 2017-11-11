@@ -1,9 +1,8 @@
 class WikisController < ApplicationController
-  before_action :set_wiki, only: [:show, :edit, :update, :destroy]
+  skip_before_action :authenticate_user!, only: [:index, :show]#new here returns error
 
   def index
     @wikis = Wiki.all
-    authorize @wikis
   end
 
   def show
@@ -17,12 +16,12 @@ class WikisController < ApplicationController
 
   def create
    @wiki = Wiki.new
+   authorize @wiki
    @wiki.title = params[:wiki][:title]
    @wiki.body = params[:wiki][:body]
    @wiki.private = params[:wiki][:private]
-
    @wiki.user = current_user
-   authorize @wiki
+
 
    if @wiki.save
      flash[:notice] = "Your wiki has been received."
@@ -40,12 +39,12 @@ class WikisController < ApplicationController
 
   def update
     @wiki = Wiki.find(params[:id])
+    authorize @wiki
     @wiki.title = params[:wiki][:title]
     @wiki.body = params[:wiki][:body]
     @wiki.private = params[:wiki][:private]
     @wiki.user = current_user
 
-    authorize @wiki
     if @wiki.save
       flash[:notice] = "Your wiki has been received."
       redirect_to @wiki
@@ -65,11 +64,6 @@ class WikisController < ApplicationController
       flash.now[:alert] = "Oh no... Can you try that again?"
       render :show
     end
-  end
-
-  def set_wiki
-    @wiki = Wiki.find(params[:id])
-    authorize @wiki
   end
 
 end
