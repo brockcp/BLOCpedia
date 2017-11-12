@@ -1,5 +1,5 @@
 class WikisController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:index, :show]#new here returns error
+  #skip_before_action :authenticate_user!, only: [:index, :show]
 
   def index
     @wikis = Wiki.all
@@ -34,7 +34,7 @@ class WikisController < ApplicationController
 
   def edit
     @wiki = Wiki.find(params[:id])
-    authorize @wiki  #not sure here
+    authorize @wiki
   end
 
   def update
