@@ -1,26 +1,26 @@
 <h1><%= @wiki.title %></h1>
 
-<% if (@wiki.private && current_user && current_user!=@wiki.user) || @wiki.private && !current_user %>
-  <h4> PRIVATE WIKI: YOU DONT HAVE ACCESS.</h4>
-<% else %>
+  <% if (@wiki.private && current_user && current_user!=@wiki.user) ||
+         @wiki.private && !current_user %>
 
-<div class="row">
-<h1><%= @wiki.body %></h1>
-<small> created by
-  <%= @wiki.user.email %>
-</small>
-</div>
+   <h4> PRIVATE WIKI: YOU DONT HAVE ACCESS.</h4>
 
-<div class="col-md-4">
+  <% else %>
+  <div class="row">
+    <h1><%= @wiki.body %></h1>
+    <small> created by
+    <%= @wiki.user.email %>
+    </small>
+  </div>
 
-      <% if policy(@wiki).update? %>
-      <%= link_to "UPDATE WIKI", edit_wiki_path(@wiki), class: 'btn btn-success' %>
-      <% end %>
-      <% if policy(@wiki).destroy? %>
-        <%= link_to "DELETE WIKI", @wiki, method: :delete, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to delete this wiki?'} %>
-      <% end %>
-      <%#= link_to "fubar", @wiki, method: :delete, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to delete this wiki?'} %>
+  <div class="col-md-4">
+    <% if policy(@wiki).update? %>
+    <%= link_to "UPDATE WIKI", edit_wiki_path(@wiki), class: 'btn btn-success' %>
+    <% end %>
+    <% if policy(@wiki).destroy? %>
+    <%= link_to "DELETE WIKI", @wiki, method: :delete, class: 'btn btn-danger',
+        data: {confirm: 'Are you sure you want to delete this wiki?'} %>
+    <% end %>
+  </div>
 
-</div>
-
-<% end %>
+  <% end %>

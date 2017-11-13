@@ -21,10 +21,8 @@ class WikisController < ApplicationController
    @wiki.body = params[:wiki][:body]
    @wiki.private = params[:wiki][:private]
    @wiki.user = current_user
-
-
    if @wiki.save
-     flash[:notice] = "Your wiki has been received."
+     flash[:notice] = "Voila! Your wiki has been created."
      redirect_to @wiki
    else
      flash[:alert] = "Snap! Something went wrong. Please try again."
@@ -44,7 +42,6 @@ class WikisController < ApplicationController
     @wiki.body = params[:wiki][:body]
     @wiki.private = params[:wiki][:private]
     @wiki.user = current_user
-
     if @wiki.save
       flash[:notice] = "Your wiki has been received."
       redirect_to @wiki
