@@ -1,6 +1,6 @@
 <h1><%= @wiki.title %></h1>
 
-  <% if @wiki.private %><%# if (@wiki.private && current_user && current_user!=@wiki.user) || @wiki.private && !current_user %>
+  <% if (@wiki.private && current_user && current_user!=@wiki.user) || @wiki.private && !current_user %>
    <h4> Sorry, this Wiki is private.</h4>
 
   <% else %>
