@@ -1,11 +1,11 @@
-<h1><%= @wiki.title %></h1>
+<h1><%= markdown(@wiki.title) %></h1>
 
   <% if (@wiki.private && current_user && current_user!=@wiki.user) || @wiki.private && !current_user %>
    <h4> Sorry, this Wiki is private.</h4>
 
   <% else %>
   <div class="row">
-    <h1><%= @wiki.body %></h1>
+    <h1><%= markdown(@wiki.body) %></h1>
     <small> created by <%= @wiki.user.email %>
             at <%= @wiki.created_at %>
     </small>
