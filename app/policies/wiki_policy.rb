@@ -11,7 +11,7 @@ class WikiPolicy < ApplicationPolicy
      true
    end
 
-  def admin_list?
+  def admin_list?#?????
     user.admin?
   end
 
@@ -20,20 +20,44 @@ class WikiPolicy < ApplicationPolicy
    end
 
    def update?
-     user.present? #CURRENT
-     #user.present? && (user.admin? == wiki.user) #IF-BOTH BUTTONS DISAPPEAR
-     #user.present? || user.admin? || user.present?
-     #user.admin? or not wiki.published?
+     user.present?
+
    end
 
    def destroy?
-     (user.present? && user.admin?) #CURRENT
-     #user.admin?
-     #user.present? && (user.admin? == wiki.user) #DELETE BUTTON DISAPPEARS
-     #user.admin? || wiki.user
-     #user.admin? or not wiki.published?
-     #user.present? #IF-BOTH BUTTONS APPEAR FOR ALL
+     (user.present? && user.admin?)
    end
 
+  class Scope
+    attr_reader :user, :scope
+
+    def initialize(user, scope)
+      @user = user
+      @scope = scope
+    end
+
+    def resolve
+      wikis = []
+        if user.role == 'admin'
+          wikis = scope.all # if the user is an admin, show them all the wikis
+        elsif user.role == 'premium'
+          all_wikis = scope.all
+          all_wikis.each do |wiki|
+            if wiki.public? || wiki.owner == user || wiki.collaborators.include?(user)
+              wikis << wiki # if the user is premium, only show them public wikis, or that private wikis they created, or private wikis they are a collaborator on
+            end
+          end
+        else # this is the lowly standard user
+          all_wikis = scope.all
+          wikis = []
+          all_wikis.each do |wiki|
+            if wiki.public? || wiki.collaborators.include?(user)
+              wikis << wiki # only show standard users public wikis and private wikis they are a collaborator on
+            end
+          end
+        end
+         wikis # return the wikis array we've built up
+        end
+    end
 
 end
