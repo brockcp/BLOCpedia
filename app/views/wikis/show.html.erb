@@ -6,9 +6,16 @@
   <% else %>
   <div class="row">
     <h1><%= markdown(@wiki.body) %></h1>
-    <small> created by <%= @wiki.user.email %>
+    <small> creator: <%= @wiki.user.email %>
             at <%= @wiki.created_at %>
     </small>
+    <br>
+           <br>
+            <h6>Collaborators:
+                <% @wiki.collaborating_users.each do |user| %>
+                    <%= user.email %>
+                <% end %>
+            </h6>
   </div>
 
   <div class="col-md-4">

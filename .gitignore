@@ -26,6 +26,7 @@
 .DS_Store
 tmp/
 log/
+NOTES.rb
 
 # Ignore application configuration
 /config/application.yml

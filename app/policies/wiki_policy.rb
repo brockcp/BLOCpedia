@@ -11,10 +11,6 @@ class WikiPolicy < ApplicationPolicy
      true
    end
 
-  def admin_list?#?????
-    user.admin?
-  end
-
    def create?
      user.present?
    end
@@ -37,27 +33,31 @@ class WikiPolicy < ApplicationPolicy
     end
 
     def resolve
-      wikis = []
-        if user.role == 'admin'
-          wikis = scope.all # if the user is an admin, show them all the wikis
-        elsif user.role == 'premium'
-          all_wikis = scope.all
-          all_wikis.each do |wiki|
-            if wiki.public? || wiki.owner == user || wiki.collaborators.include?(user)
-              wikis << wiki # if the user is premium, only show them public wikis, or that private wikis they created, or private wikis they are a collaborator on
-            end
-          end
-        else # this is the lowly standard user
-          all_wikis = scope.all
-          wikis = []
-          all_wikis.each do |wiki|
-            if wiki.public? || wiki.collaborators.include?(user)
-              wikis << wiki # only show standard users public wikis and private wikis they are a collaborator on
-            end
-          end
-        end
-         wikis # return the wikis array we've built up
-        end
-    end
+        wikis = []
+        if user.nil?  #CANT ACCESS INDEX FOR GUEST WITHOUT THIS
+          wikis = scope.all
 
+        elsif user.role == 'admin'
+            wikis = scope.all # if user admin, show all wikis
+
+        elsif user.role == 'premium'
+            all_wikis = scope.all
+            all_wikis.each do |wiki|
+                if !wiki.private? || wiki.user == user || wiki.collaborators.include?(user) #HELP-SHOULD BE PUBLIC -> PREMIUM CANT SEE INDEX-THROWS ERROR
+                    wikis << wiki # if premium, only show public wikis, private wikis they created, or private wikis they are collaborator
+                end
+            end
+
+        else # standard user
+            all_wikis = scope.all
+            wikis = []
+            all_wikis.each do |wiki|
+                if !wiki.public? || wiki.collaborators.include?(user)
+                    wikis << wiki # only show standard users public wikis and private wikis they are a collaborator on
+                end
+            end
+        end
+        wikis # return the wikis array we've built up
+    end
+end
 end

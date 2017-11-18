@@ -14,6 +14,13 @@
         <%= f.check_box :private %> Private Wiki
         <% end %>
       </div>
+      <div class="form-group">
+       <h4>Add collaborators</h4>
+        <% User.all.each do |collaborating_user| %>
+         <% next if collaborating_user == @wiki.user %>
+         <%= email_field_tag :collaborator %>
+        <% end %>
+      </div>
     <% end %>
 
     <div class="form-group">
