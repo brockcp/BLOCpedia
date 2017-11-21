@@ -21,8 +21,8 @@
   <div class="col-md-4">
     <% if policy(@wiki).update? %>
       <%= link_to "UPDATE WIKI", edit_wiki_path(@wiki), class: 'btn btn-success' %>
-    <%# end %>
-    <%# if policy(@wiki).destroy? %>
+    <% end %>
+    <% if policy(@wiki).destroy? %>
       <%= link_to "DELETE WIKI", @wiki, method: :delete, class: 'btn btn-danger',
       data: {confirm: 'Are you sure you want to delete this wiki?'} %>
     <% end %>

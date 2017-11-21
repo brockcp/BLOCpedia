@@ -15,8 +15,7 @@ class ApplicationPolicy
   end
 
   def create?
-    #false #false is default
-    user.present?
+    false
   end
 
   def new?
@@ -24,8 +23,7 @@ class ApplicationPolicy
   end
 
   def update?
-    #false #false is default
-    user.present?
+    false
   end
 
   def edit?

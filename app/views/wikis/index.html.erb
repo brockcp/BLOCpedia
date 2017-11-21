@@ -19,8 +19,8 @@
     </div>
 
     <div class="col-md-4">
-      <% if policy(Wiki.new).create? %>
+      <%# if policy(Wiki.new).create? %>  <!--commented out for testing purposes-->
         <%= link_to "New Wiki", new_wiki_path, class: 'btn btn-success' %>
-      <% end %>
+      <%# end %>
     </div>
  </div>

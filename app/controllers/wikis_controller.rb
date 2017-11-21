@@ -1,8 +1,9 @@
 class WikisController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:index, :show]
+  #before_action :authenticate_user!, except: [:index, :show] #doesnt seem to help
 
   def index
-    @wikis = policy_scope(Wiki)
+    #@wikis = policy_scope(Wiki)
+    @wikis = Wiki.all
   end
 
   def show
@@ -11,14 +12,14 @@ class WikisController < ApplicationController
 
   def new
     @wiki = Wiki.new
-    authorize @wiki #???
   end
 
   def create
    @wiki = Wiki.new
    @wiki.assign_attributes(wiki_params)
    @wiki.user = current_user
-   authorize @wiki #???
+   @wiki.collaborators = params[:wiki][:collaborating_user_ids]
+
    if @wiki.save
      flash[:notice] = "Voila! Your wiki has been created."
      redirect_to @wiki
@@ -30,15 +31,13 @@ class WikisController < ApplicationController
 
   def edit
     @wiki = Wiki.find(params[:id])
-    authorize @wiki   #???
   end
 
   def update
     @wiki = Wiki.find(params[:id])
     @wiki.assign_attributes(wiki_params)
     @wiki.user = current_user
-    #authorize @wiki
-    @wiki.collaborating_user_ids = params[:wiki][:collaborating_user_ids]
+    @wiki.collaborators = params[:wiki][:collaborating_user_ids]
 
     if @wiki.save
       flash[:notice] = "Your wiki has been received."
@@ -51,7 +50,6 @@ class WikisController < ApplicationController
 
   def destroy
     @wiki = Wiki.find(params[:id])
-    #authorize @wiki  #if NOT commented-pundit DOES NOT allow destruction->throws error
     if @wiki.destroy
       flash[:notice] = "\"#{@wiki.title}\" was deleted!"
       redirect_to wikis_path
