@@ -2,8 +2,8 @@ class WikisController < ApplicationController
   #before_action :authenticate_user!, except: [:index, :show] #doesnt seem to help
 
   def index
-    #@wikis = policy_scope(Wiki)
-    @wikis = Wiki.all
+    @wikis = policy_scope(Wiki)
+    #@wikis = Wiki.all
   end
 
   def show
@@ -18,7 +18,7 @@ class WikisController < ApplicationController
    @wiki = Wiki.new
    @wiki.assign_attributes(wiki_params)
    @wiki.user = current_user
-   @wiki.collaborators = params[:wiki][:collaborating_user_ids]
+   @wiki.collaborating_users = params[:wiki][:collaborating_user_ids]
 
    if @wiki.save
      flash[:notice] = "Voila! Your wiki has been created."
@@ -37,7 +37,7 @@ class WikisController < ApplicationController
     @wiki = Wiki.find(params[:id])
     @wiki.assign_attributes(wiki_params)
     @wiki.user = current_user
-    @wiki.collaborators = params[:wiki][:collaborating_user_ids]
+    @wiki.collaborating_users = params[:wiki][:collaborating_user_ids]
 
     if @wiki.save
       flash[:notice] = "Your wiki has been received."

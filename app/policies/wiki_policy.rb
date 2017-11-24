@@ -7,10 +7,6 @@ class WikiPolicy < ApplicationPolicy
     @wiki = wiki
   end
 
-   # def index?     #doesnt seem to help
-   #   user.present?
-   # end
-
    def create?
      user.present?
    end
@@ -35,30 +31,36 @@ class WikiPolicy < ApplicationPolicy
 
     def resolve
         wikis = []
-        #if user.nil?  #CANT ACCESS INDEX FOR GUEST WITHOUT user.nil
-        #  wikis = scope.all
+        if user.nil?  #IF NIL NECESSARY FOR GUEST TO SEE INDEX
+          all_wikis = scope.all
+          wikis = []
+          all_wikis.each do |wiki|
+            if !wiki.private?
+              wikis << wiki
+            end
+          end
 
-        if user.role == 'admin'
-            wikis = scope.all # if admin, show all wikis
+        elsif user.role == 'admin'
+            wikis = scope.all # ADMIN - SHOW ALL WIKIS
 
         elsif user.role == 'premium'
             all_wikis = scope.all
             all_wikis.each do |wiki|
-                if !wiki.private? || wiki.user == user || wiki.collaborators.include?(user) #HELP-SHOULD BE PUBLIC -> PREMIUM CANT SEE INDEX-THROWS ERROR
-                    wikis << wiki # if premium -> show public, own private, and collaborating wikis
+                if !wiki.private? || wiki.user == user || wiki.collaborating_users.include?(user)
+                    wikis << wiki #PREMIUM - SHOW PUBLIC, OWN PRIVATE, & COLLABORATING WIKIS
                 end
             end
 
-        else # standard user
+        else # STANDARD
             all_wikis = scope.all
             wikis = []
             all_wikis.each do |wiki|
-                if !wiki.private? || wiki.collaborators.include?(user)
-                    wikis << wiki #if standard -> public and collaborating wikis
+                if !wiki.private? || wiki.collaborating_users.include?(user)
+                    wikis << wiki #STANDARD - PUBLIC & COLLABORATING WIKIS
                 end
             end
         end
-        wikis # return new array
+        wikis # RETURN NEW ARRAY
     end
 end
 end
