@@ -31,7 +31,7 @@ class WikiPolicy < ApplicationPolicy
 
     def resolve
         wikis = []
-        if user.nil?  #IF NIL NECESSARY FOR GUEST TO SEE INDEX
+        if user.nil?  #NECESSARY
           all_wikis = scope.all
           wikis = []
           all_wikis.each do |wiki|
@@ -41,26 +41,26 @@ class WikiPolicy < ApplicationPolicy
           end
 
         elsif user.role == 'admin'
-            wikis = scope.all # ADMIN - SHOW ALL WIKIS
+            wikis = scope.all # if admin, show all wikis
 
         elsif user.role == 'premium'
             all_wikis = scope.all
             all_wikis.each do |wiki|
                 if !wiki.private? || wiki.user == user || wiki.collaborating_users.include?(user)
-                    wikis << wiki #PREMIUM - SHOW PUBLIC, OWN PRIVATE, & COLLABORATING WIKIS
+                    wikis << wiki # if premium -> show public, own private, and collaborating wikis
                 end
             end
 
-        else # STANDARD
+        else # standard user
             all_wikis = scope.all
             wikis = []
             all_wikis.each do |wiki|
                 if !wiki.private? || wiki.collaborating_users.include?(user)
-                    wikis << wiki #STANDARD - PUBLIC & COLLABORATING WIKIS
+                    wikis << wiki #if standard -> public and collaborating wikis
                 end
             end
         end
-        wikis # RETURN NEW ARRAY
+        wikis # return new array
     end
 end
 end
