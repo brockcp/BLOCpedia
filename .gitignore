@@ -26,7 +26,8 @@
 .DS_Store
 tmp/
 log/
-NOTES.rb
+README-bp.txt
+BLOCIPEDIA PDF.pdf
 
 # Ignore application configuration
 /config/application.yml
