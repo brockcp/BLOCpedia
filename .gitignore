@@ -26,7 +26,7 @@
 .DS_Store
 tmp/
 log/
-README-bp.txt
+READMEBP.txt
 BLOCIPEDIA PDF.pdf
 
 # Ignore application configuration
