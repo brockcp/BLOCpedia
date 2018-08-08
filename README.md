@@ -1,6 +1,6 @@
-# Blocipedia
+# Brockpedia
 
-- **Blocipedia** is a wiki site where users can share and collaborate either publicly or privately on educational information.
+- **Brockpedia** is a wiki site where users can share and collaborate either publicly or privately on educational information.
 
 ### Features:
 
@@ -24,9 +24,9 @@
 
 ### Background
 
-- I built Blocipedia in late 2017 during the MVC phase of my web developer program at Bloc. This was my second significant project working with Ruby on Rails on the backend. This project not only reinforced my understanding of the MVC Model and the RoR framework but also introduced me to new technologies such as payment processing and role authorizations in web development.
+- I built Brockpedia in late 2017 during the MVC phase of my web developer program at Bloc. This was my second significant project working with Ruby on Rails on the backend. This project not only reinforced my understanding of the MVC Model and the RoR framework but also introduced me to new technologies such as payment processing and role authorizations in web development.
 
-##### Note: Blocipedia is still in Development. Plans include:
+##### Note: Brockpedia is still in Development. Plans include:
 - Documentation Completion
 - Fully responsive
 - Given a nice theme
